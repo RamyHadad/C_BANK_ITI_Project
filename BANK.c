@@ -17,19 +17,19 @@
 
  BANK * arr_account[account_max]={&account_1,&account_2,&account_3};
 
- BANK account_1 = {
+//  BANK account_1 = {
 
- ._full_name = " ramy haddad",
-   ._address = " badr city ",
-   ._national_ID[0] = 29707271500055,
-   ._age = 25 ,
-   ._bank_ID = 225511,
-   ._guardian = " ",
-   ._guardian_national_ID[0] = 0,
-   ._account_status = 1,
-   ._balance = 2500 
+//  ._full_name = " ramy haddad",
+//    ._address = " badr city ",
+//    ._national_ID[0] = 29707271500055,
+//    ._age = 25 ,
+//    ._bank_ID = 225511,
+//    ._guardian = " ",
+//    ._guardian_national_ID[0] = 0,
+//    ._account_status = 1,
+//    ._balance = 2500 
 
- };
+//  };
 
  BANK * ptr_Bank = (BANK *)  0;
  uint8_t acount_flag = 0;
@@ -107,7 +107,7 @@ void open_exisisting_Account(void){
         switch (temp_open_acc)
         {
         case 1 : Make_transaction();break;
-        case 2 : Change_Account_Status(); break;
+        case 2 : Change_Account_Status(); _entrance_mode_admin =1 ; break;
         case 3 : Get_Cash(); printf("new balance = %d\n",ptr_Bank->_balance);  break;
         case 4 : Deposit_in_Account(); printf("new balance = %d\n",ptr_Bank->_balance); break;
         default: printf("invalid option\n"); break;
@@ -127,6 +127,7 @@ void Client_open_exisisting_Account(uint32_t ID, uint32_t pass)
         if( ID == arr_account[i]->_bank_ID )
         {
             ptr_Bank = arr_account[i];
+            printf("Account Found!!\n");
             break;
         }
         else
@@ -136,10 +137,11 @@ void Client_open_exisisting_Account(uint32_t ID, uint32_t pass)
     }
 
     if( (pass == ptr_Bank->_passcode) ) 
-    {
+    {   
+        printf("successful Login!!\n");
         uint8_t temp_open_acc = 0;
-        printf("please choose an option\nMake Transcation press 1\nChange Account password press 2\nGet Cash press 3\nBack to Main press 4");
-        scanf("%d",temp_open_acc);
+        printf("please choose an option\nMake Transcation press 1\nChange Account password press 2\nGet Cash press 3\nDeposit in account press 4\nBack to Main press 5");
+        scanf("%d",&temp_open_acc);
         switch (temp_open_acc)
         {
         case 1 : Make_transaction(); break;
@@ -192,13 +194,13 @@ void Make_transaction(void){
 
 void Change_Account_Status(void){
     uint8_t temp = 0 ;
-    printf("choose account status : \n 1. press 1 for active\n2. press 0 for Restriction\n 3. press 2 for closed \n");
-    scanf("%u",temp);
+    printf("choose account status :\n1. press 1 for Active \n2. press 2 for Restriction \n3. press 3 for Closed \n");
+    scanf("%d",&temp);
     switch (temp)
     {
-    case 0: ptr_Bank->_account_status = Active ; break;
-    case 1: ptr_Bank->_account_status = Restricted ; break;
-    case 2: ptr_Bank->_account_status = Closed ; break;
+    case 1: ptr_Bank->_account_status = Active ; break;
+    case 2: ptr_Bank->_account_status = Restricted ; break;
+    case 3: ptr_Bank->_account_status = Closed ; break;
 
     default: ptr_Bank->_account_status = Active ; 
         break;
